@@ -35,16 +35,51 @@ except ImportError:
         """
 
     class ComputeError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when polars could not finish the computation."""
+        """
+        Exception raised when polars could not finish the computation.
+
+        Example
+        -------
+        >>> df = pl.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
+        >>> df.filter(pl.col("a") == "x")
+        Traceback (most recent call last):
+        polars.exceptions.ComputeError: cannot compare string with numeric data
+        """
 
     class DuplicateError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when a column name is duplicated."""
+        """
+        Exception raised when a column name is duplicated.
+
+        Example
+        -------
+        >>> df = pl.DataFrame({"a": [1, 1, 1]})
+        >>> pl.concat([df, df], how="horizontal")
+        Traceback (most recent call last):
+        polars.exceptions.DuplicateError: unable to hstack, column with name "a" already exists
+        """  # noqa: W505
 
     class InvalidOperationError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when an operation is not allowed on a certain data type."""
+        """
+        Exception raised when an operation is not allowed on a certain data type.
+
+        Example
+        -------
+        >>> s = pl.Series("a", [1, 2, 3])
+        >>> s.is_in(["x", "y"])
+        Traceback (most recent call last):
+        polars.exceptions.InvalidOperationError: `is_in` cannot check for String values in Int64 data
+        """  # noqa: W505
 
     class NoDataError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when an operation can not be performed on an empty data structure."""  # noqa: W505
+        """
+        Exception raised when an operation can not be performed on an empty data structure.
+
+        Example
+        -------
+        >>> pl.from_dicts([])
+        Traceback (most recent call last):
+        polars.exceptions.NoDataError: no data, cannot infer schema
+        """  # noqa: W505
 
     class OutOfBoundsError(PolarsError):  # type: ignore[no-redef, misc]
         """Exception raised when the given index is out of bounds."""
@@ -53,13 +88,29 @@ except ImportError:
         """Exception raised when an unexpected state causes a panic in the underlying Rust library."""  # noqa: W505
 
     class SchemaError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when trying to combine data structures with mismatched schemas."""  # noqa: W505
+        """
+        Exception raised when trying to combine data structures with mismatched schemas.
+
+        Example
+        -------
+        >>> pl.Series([0, 1, 0]).any()
+        Traceback (most recent call last):
+        polars.exceptions.SchemaError: invalid series dtype: expected `Boolean`, got `i64`
+        """  # noqa: W505
 
     class SchemaFieldNotFoundError(PolarsError):  # type: ignore[no-redef, misc]
         """Exception raised when a specified schema field is not found."""
 
     class ShapeError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when trying to combine data structures with incompatible shapes."""  # noqa: W505
+        """
+        Exception raised when trying to combine data structures with incompatible shapes.
+
+        Example
+        -------
+        >>> pl.DataFrame({"a": [1, 2, 3], "b": [4, 5]})
+        Traceback (most recent call last):
+        polars.exceptions.ShapeError: could not create a new DataFrame: series "a" has length 3 while series "b" has length 2
+        """  # noqa: W505
 
     class StringCacheMismatchError(PolarsError):  # type: ignore[no-redef, misc]
         """Exception raised when string caches come from different sources."""
