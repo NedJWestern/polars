@@ -23,7 +23,16 @@ except ImportError:
         """Base class for all Polars errors."""
 
     class ColumnNotFoundError(PolarsError):  # type: ignore[no-redef, misc]
-        """Exception raised when a specified column is not found."""
+        """
+        Exception raised when a specified column is not found.
+
+        Example
+        -------
+        >>> df = pl.DataFrame({"a": [1, 2, 3]})
+        >>> df.select("b")
+        Traceback (most recent call last):
+        polars.exceptions.ColumnNotFoundError: b
+        """
 
     class ComputeError(PolarsError):  # type: ignore[no-redef, misc]
         """Exception raised when polars could not finish the computation."""
