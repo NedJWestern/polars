@@ -9,7 +9,7 @@ on:
       - .github/workflows/test-python.yml
   push:
     branches:
-      - main
+      - dev
     paths:
       - crates/**
       - docs/src/python/**
